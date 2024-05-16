@@ -4,7 +4,7 @@ from menu import menu, pause
 
 def input_student():
 	try:
-		s.add_student(Student(input('Name: '), int(input('Age: '))))
+		s.add_student(Student(input('Name: '), int(input('Age: ')), input('Birthday: ')))
 		print('Added student to the database. Returning to main menu.')
 	except Exception as e:
 		print(f'An error occurred: {e}')
