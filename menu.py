@@ -37,7 +37,7 @@ def menu(*items: list[str]):
 	selected = 0
 	while True:
 		# Single draw call :3
-		stdout.write(CLEAR + CUR0 + '\n'.join([SELMARK + item + ' <' + RESET if i == selected else item for i, item in enumerate(items)]) + f'\n{GREY}Use arrow keys to navigate{RESET}')
+		stdout.write(CLEAR + CUR0 + '\n'.join([SELMARK + item + ' <' + RESET if i == selected else item for i, item in enumerate(items)]) + f'\n{GREY}Use arrow keys to navigate{RESET}\n')
 		
 		c = getch()
 
@@ -54,5 +54,11 @@ def menu(*items: list[str]):
 			stdout.write(CLEAR + CUR0)
 			return selected
 
-if __name__ == '__main__':
-	print(menu('farts', 'poops', 'shitss'))
+def pause(msg: str = None):
+	if msg:
+		stdout.write(msg + '\n')
+	else:
+		stdout.write(f'{GREY}Press any key to continue...{RESET}\n')
+	
+	getch()
+	stdout.write(CLEAR + CUR0)
