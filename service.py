@@ -9,7 +9,12 @@ class Service:
 		ret = []
 		with open('db.txt', 'r') as file:
 			for line in file:
-				ret.append(Student.parse(line.strip()))
+				try:
+					student = Student.parse(line.strip())
+				except ValueError:
+					student = Student.invalid()
+				
+				ret.append(student)
 		return ret
 
 	def find_students(self, **by):

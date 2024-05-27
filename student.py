@@ -29,12 +29,9 @@ class Student:
 		data = str.split('\t')
 
 		if len(data) != 4:
-			return Student.invalid()
+			raise ValueError('Invalid row')
 		
-		try: ret = Student(data[0], data[1], int(data[2]), data[3])
-		except: return Student.invalid()
-		
-		return ret
+		return Student(data[0], data[1], int(data[2]), data[3])
 	
 	@staticmethod
 	def invalid():
