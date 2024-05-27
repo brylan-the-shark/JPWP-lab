@@ -3,8 +3,14 @@ from student import Student
 from menu import menu, pause, clear
 
 def input_student():
+	sample = Student.invalid()
+	keys : list[str] = [key for key in vars(sample).keys()]
+	ts : list[type] = [type(val) for val in vars(sample).values()]
+	vals = [input(f'{key.capitalize()}: ') for key in keys]
+	vals = [ts[i](val) for i, val in enumerate(vals)]
+
 	try:
-		s.add_student(Student(input('Name: '), int(input('Age: ')), input('Birthday: ')))
+		s.add_student(Student(*vals))
 		print('Added student to the database. Returning to main menu.')
 	except Exception as e:
 		print(f'An error occurred: {e}')
