@@ -1,14 +1,10 @@
+from dataclasses import dataclass
+
+@dataclass
 class Student:
-	def __init__(self, name, age, birthday):
-		self.name = name
-		self.age = age
-		self.birthday = birthday
-
-	def get_name(self):
-		return self.name
-
-	def get_age(self):
-		return self.age
+	name : str
+	age : int
+	birthday : str
 
 	def __str__(self):
 		return f'{self.name} {self.age} {self.birthday}'
