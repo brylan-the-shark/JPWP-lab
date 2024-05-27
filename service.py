@@ -2,13 +2,13 @@ from student import Student
 
 class Service:
 	def add_student(self, student):
-		with open('db.txt', 'a') as file:
-			file.write(f'{student}\n')
+		with open('db.txt', 'a') as f:
+			f.write(f'{student}\n')
 
 	def get_students(self) -> list[Student]:
 		ret = []
-		with open('db.txt', 'r') as file:
-			for line in file:
+		with open('db.txt', 'r') as f:
+			for line in f:
 				try:
 					student = Student.parse(line.strip())
 				except ValueError:
@@ -16,6 +16,15 @@ class Service:
 				
 				ret.append(student)
 		return ret
+	
+	def remove_student(self, idx):
+		with open('db.txt', 'r') as f:
+			lines = f.readlines()
+		
+		with open('db.txt', 'w') as f:
+			for i, line in enumerate(lines):
+				if i != idx:
+					f.write(line)
 
 	def find_students(self, **by):
 		ret = []

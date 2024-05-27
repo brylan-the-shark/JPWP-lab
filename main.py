@@ -14,6 +14,7 @@ def input_student():
 		print('Added student to the database. Returning to main menu.')
 	except Exception as e:
 		print(f'An error occurred: {e}')
+	
 	pause()
 
 def list_students():
@@ -23,6 +24,7 @@ def list_students():
 		print('End of list. Returning to main menu.')
 	except Exception as e:
 		print(f'An error occurred: {e}')
+	
 	pause()
 
 def find_students():
@@ -44,12 +46,26 @@ def find_students():
 	
 	pause()
 
+def remove_student():
+	try:
+		students = s.get_students()
+		idx = menu(*[str(student) for student in students], 'Cancel')
+		if idx >= len(students):
+			return
+
+		s.remove_student(idx)
+		print('Removed student from the database. Returning to main menu.')
+	except Exception as e:
+		print(f'An error occurred: {e}')
+	
+	pause()
+
 if __name__ == '__main__':
 	try:
 		s = Service()
 		
 		while True:
-			match menu('Add studend', 'List students', 'Find students', 'Exit'):
+			match menu('Add student', 'List students', 'Find students', 'Remove student', 'Exit'):
 				case 0:
 					input_student()
 				case 1:
@@ -57,6 +73,8 @@ if __name__ == '__main__':
 				case 2:
 					find_students()
 				case 3:
+					remove_student()
+				case 4:
 					exit()
 	except IOError as e:
 		print(f'An error occurred: {e}')
