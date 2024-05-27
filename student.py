@@ -13,5 +13,9 @@ class Student:
 	def parse(str):
 		data = str.split('\t')
 		if len(data) != 3:
-			return Student('Old/invalid format', -1, 'None')
+			return Student.invalid()
 		return Student(data[0], int(data[1]), data[2])
+	
+	@staticmethod
+	def invalid():
+		return Student('Old/invalid format', -1, 'None')

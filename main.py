@@ -1,6 +1,6 @@
 from service import Service
 from student import Student
-from menu import menu, pause
+from menu import menu, pause, clear
 
 def input_student():
 	try:
@@ -19,17 +19,38 @@ def list_students():
 		print(f'An error occurred: {e}')
 	pause()
 
+def find_students():
+	sample = Student.invalid()
+	keys : list[str] = [key for key in vars(sample).keys()]
+	i = menu(*[f'By {key}' for key in keys])
+	val = input(f'{keys[i].capitalize()}: ')
+	t = type(vars(sample)[keys[i]])
+	val = t(val)
+	
+	clear()
+
+	try:
+		for student in s.find_students(**{keys[i]: val}):
+			print(student)
+		print('End of list. Returning to main menu.')
+	except Exception as e:
+		print(f'An error occurred: {e}')
+	
+	pause()
+
 if __name__ == '__main__':
 	try:
 		s = Service()
 		
 		while True:
-			match menu('Add studend', 'List students', 'Exit'):
+			match menu('Add studend', 'List students', 'Find students', 'Exit'):
 				case 0:
 					input_student()
 				case 1:
 					list_students()
 				case 2:
+					find_students()
+				case 3:
 					exit()
 	except IOError as e:
 		print(f'An error occurred: {e}')
