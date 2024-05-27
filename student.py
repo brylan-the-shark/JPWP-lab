@@ -18,7 +18,7 @@ class Student:
 		self.birthday = birthday
 
 	def __str__(self):
-		return f'{self.name}\t{self.age}\t{self.birthday}'
+		return '\t'.join(str(v) for v in vars(self).values())
 
 	@staticmethod
 	def parse(str):
