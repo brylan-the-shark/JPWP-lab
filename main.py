@@ -24,10 +24,12 @@ if __name__ == '__main__':
 		s = Service()
 		
 		while True:
-			match menu('Add studend', 'List students'):
+			match menu('Add studend', 'List students', 'Exit'):
 				case 0:
 					input_student()
 				case 1:
 					list_students()
+				case 2:
+					exit()
 	except IOError as e:
 		print(f'An error occurred: {e}')
