@@ -33,6 +33,9 @@ CLEAR = '\033[2J'
 CUR0 = '\033[1;1H'
 GREY = '\033[90m'
 
+def clear():
+	stdout.write(CLEAR + CUR0)
+
 def menu(*items: list[str]):
 	selected = 0
 	while True:
@@ -51,7 +54,7 @@ def menu(*items: list[str]):
 			selected = max(min(selected, len(items) - 1), 0)
 		
 		if c == b'\r':
-			stdout.write(CLEAR + CUR0)
+			clear()
 			return selected
 
 def pause(msg: str = None):
@@ -61,4 +64,4 @@ def pause(msg: str = None):
 		stdout.write(f'{GREY}Press any key to continue...{RESET}\n')
 	
 	getch()
-	stdout.write(CLEAR + CUR0)
+	clear()
