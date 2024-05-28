@@ -62,7 +62,7 @@ def remove_student():
 
 if __name__ == '__main__':
 	try:
-		s = Service()
+		s = Service(int(input('Enter encryption key: ')))
 		
 		while True:
 			match menu('Add student', 'List students', 'Find students', 'Remove student', 'Exit'):
