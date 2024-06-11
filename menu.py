@@ -40,7 +40,7 @@ def menu(*items: list[str]):
 	selected = 0
 	while True:
 		# Single draw call :3
-		stdout.write(CLEAR + CUR0 + '\n'.join([SELMARK + item + ' <' + RESET if i == selected else item for i, item in enumerate(items)]) + f'\n{GREY}Use arrow keys to navigate, ENTER to select...{RESET}\n')
+		stdout.write(CLEAR + CUR0 + '\n'.join([SELMARK + item + RESET + ' <' if i == selected else item for i, item in enumerate(items)]) + f'\n{GREY}Use arrow keys to navigate, ENTER to select...{RESET}\n')
 		
 		c = getch()
 
