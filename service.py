@@ -1,8 +1,24 @@
 from student import Student
+from os.path import isfile
+
+DB_PATH = 'db.txt'
 
 class Service:
 	def __init__(self, encryption_key : int):
 		self.key = encryption_key
+
+		if isfile(DB_PATH):
+			with open(DB_PATH, 'r') as f:
+				try:
+					keyhash = int(f.readline())
+				except:
+					raise IOError(f'Invalid file format ({DB_PATH}) delete the file and rerun the program')
+				
+				if keyhash != self.key:
+					raise ValueError('Encryption keys do not match')
+		else:
+			with open(DB_PATH, 'w') as f:
+				f.write(str(self.key) + '\n')
 
 	@staticmethod
 	def __encrypt(text : str, key : int):
@@ -23,28 +39,28 @@ class Service:
 		return Service.__encrypt(text, -self.key)
 
 	def add_student(self, student):
-		with open('db.txt', 'a') as f:
+		with open(DB_PATH, 'a') as f:
 			f.write(self.encrypt(f'{student}\n'))
 
 	def get_students(self) -> list[Student]:
 		ret = []
-		with open('db.txt', 'r') as f:
-			for line in f:
+		with open(DB_PATH, 'r') as f:
+			for line in f.readlines()[1:]:
 				try:
 					student = Student.parse(self.decrypt(line.strip()))
-				except ValueError:
+				except:
 					student = Student.invalid()
 				
 				ret.append(student)
 		return ret
 	
 	def remove_student(self, idx):
-		with open('db.txt', 'r') as f:
+		with open(DB_PATH, 'r') as f:
 			lines = f.readlines()
 		
-		with open('db.txt', 'w') as f:
+		with open(DB_PATH, 'w') as f:
 			for i, line in enumerate(lines):
-				if i != idx:
+				if i != idx + 1:
 					f.write(line)
 
 	def find_students(self, **by):
