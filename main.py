@@ -9,21 +9,15 @@ def input_student():
 	vals = [input(f'{key.capitalize()}: ') for key in keys]
 	vals = [ts[i](val) for i, val in enumerate(vals)]
 
-	try:
-		s.add_student(Student(*vals))
-		print('Added student to the database. Returning to main menu.')
-	except Exception as e:
-		print(f'An error occurred: {e}')
+	s.add_student(Student(*vals))
+	print('Added student to the database. Returning to main menu.')
 	
 	pause()
 
 def list_students():
-	try:
-		for student in s.get_students():
-			print(student)
-		print('End of list. Returning to main menu.')
-	except Exception as e:
-		print(f'An error occurred: {e}')
+	for student in s.get_students():
+		print(student)
+	print('End of list. Returning to main menu.')
 	
 	pause()
 
@@ -36,35 +30,33 @@ def find_students():
 	val = t(val)
 	
 	clear()
-
-	try:
-		for student in s.find_students(**{keys[i]: val}):
-			print(student)
-		print('End of list. Returning to main menu.')
-	except Exception as e:
-		print(f'An error occurred: {e}')
+	
+	for student in s.find_students(**{keys[i]: val}):
+		print(student)
+	print('End of list. Returning to main menu.')
 	
 	pause()
 
 def remove_student():
-	try:
-		students = s.get_students()
-		idx = menu(*[str(student) for student in students], 'Cancel')
-		if idx >= len(students):
-			return
+	students = s.get_students()
+	idx = menu(*[str(student) for student in students], 'Cancel')
+	if idx >= len(students):
+		return
 
-		s.remove_student(idx)
-		print('Removed student from the database. Returning to main menu.')
-	except Exception as e:
-		print(f'An error occurred: {e}')
+	s.remove_student(idx)
+	print('Removed student from the database. Returning to main menu.')
 	
 	pause()
 
 if __name__ == '__main__':
 	try:
 		s = Service(int(input('Enter encryption key: ')))
-		
-		while True:
+	except Exception as e:
+		print(f'An error occurred: {e}')
+		exit(1)
+
+	while True:
+		try:
 			match menu('Add student', 'List students', 'Find students', 'Remove student', 'Exit'):
 				case 0:
 					input_student()
@@ -76,5 +68,6 @@ if __name__ == '__main__':
 					remove_student()
 				case 4:
 					exit()
-	except IOError as e:
-		print(f'An error occurred: {e}')
+		except Exception as e:
+			print(f'An error occurred: {e}')
+			pause()
