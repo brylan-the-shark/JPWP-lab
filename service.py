@@ -1,5 +1,6 @@
 from student import Student
 from os.path import isfile
+from hash import hash
 
 DB_PATH = 'db.txt'
 
@@ -14,11 +15,11 @@ class Service:
 				except:
 					raise IOError(f'Invalid file format ({DB_PATH}) delete the file and rerun the program')
 				
-				if keyhash != self.key:
+				if keyhash != hash(self.key):
 					raise ValueError('Encryption keys do not match')
 		else:
 			with open(DB_PATH, 'w') as f:
-				f.write(str(self.key) + '\n')
+				f.write(str(hash(self.key)) + '\n')
 
 	@staticmethod
 	def __encrypt(text : str, key : int):
