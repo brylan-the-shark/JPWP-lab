@@ -28,6 +28,9 @@ def find_students():
 	val = input(f'{keys[i].capitalize()}: ')
 	t = type(vars(sample)[keys[i]])
 	val = t(val)
+	vals = [val for val in vars(sample).values()]
+	vals[i] = val
+	Student(*vals)
 	
 	clear()
 	
