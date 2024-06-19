@@ -29,6 +29,8 @@ class Service:
 				new_text[i] = chr((ord(c) + key - ord('A')) % (ord('Z') - ord('A') + 1) + ord('A'))
 			elif 'a' <= c and c <= 'z':
 				new_text[i] = chr((ord(c) + key - ord('a')) % (ord('z') - ord('a') + 1) + ord('a'))
+			elif '0' <= c and c <= '9':
+				new_text[i] = chr((ord(c) + key - ord('0')) % (ord('9') - ord('0') + 1) + ord('0'))
 			else:
 				new_text[i] = c
 		return ''.join(new_text)
