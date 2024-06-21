@@ -75,5 +75,5 @@ if __name__ == '__main__':
 				case 4:
 					exit()
 		except Exception as e:
-			print(f'An error occurred: {e}')
+			print(f'{e.__class__.__name__}: {e}')
 			pause()
