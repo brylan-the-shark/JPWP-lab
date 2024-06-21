@@ -8,18 +8,7 @@ class Service:
 	def __init__(self, encryption_key : int):
 		self.key = encryption_key
 
-		if isfile(DB_PATH):
-			with open(DB_PATH, 'r') as f:
-				try:
-					keyhash = int(f.readline())
-				except:
-					raise IOError(f'Invalid file format ({DB_PATH}) delete the file and rerun the program')
-				
-				if keyhash != hash(self.key):
-					raise ValueError('Encryption keys do not match')
-		else:
-			with open(DB_PATH, 'w') as f:
-				f.write(str(hash(self.key)) + '\n')
+		self.init_file()
 
 	@staticmethod
 	def __encrypt(text : str, key : int):
@@ -41,11 +30,29 @@ class Service:
 	def decrypt(self, text : str):
 		return Service.__encrypt(text, -self.key)
 
+	def init_file(self):
+		if isfile(DB_PATH):
+			with open(DB_PATH, 'r') as f:
+				try:
+					keyhash = int(f.readline())
+				except:
+					raise ValueError(f'Invalid database format ({DB_PATH}) delete the file and rerun the program')
+				
+				if keyhash != hash(self.key):
+					raise ValueError('Encryption keys do not match')
+		else:
+			with open(DB_PATH, 'w') as f:
+				f.write(str(hash(self.key)) + '\n')
+
 	def add_student(self, student):
+		self.init_file()
+
 		with open(DB_PATH, 'a') as f:
 			f.write(self.encrypt(f'{student}\n'))
 
 	def get_students(self) -> list[Student]:
+		self.init_file()
+
 		ret = []
 		with open(DB_PATH, 'r') as f:
 			for line in f.readlines()[1:]:
@@ -58,6 +65,8 @@ class Service:
 		return ret
 	
 	def remove_student(self, idx):
+		self.init_file()
+		
 		with open(DB_PATH, 'r') as f:
 			lines = f.readlines()
 		
