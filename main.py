@@ -1,6 +1,7 @@
 from service import Service
 from student import Student
-from menu import menu, pause, clear
+from menu import pause, clear
+import menu
 
 def input_student():
 	sample = Student.invalid()
@@ -24,7 +25,7 @@ def list_students():
 def find_students():
 	sample = Student.invalid()
 	keys : list[str] = [key for key in vars(sample).keys()]
-	i = menu(*[f'By {key}' for key in keys])
+	i = menu.menu(*[f'By {key}' for key in keys])
 	val = input(f'{keys[i].capitalize()}: ')
 	t = type(vars(sample)[keys[i]])
 	val = t(val)
@@ -33,7 +34,7 @@ def find_students():
 	Student(*vals)
 	
 	clear()
-	
+
 	for student in s.find_students(**{keys[i]: val}):
 		print(student)
 	print('End of list. Returning to main menu.')
@@ -42,7 +43,7 @@ def find_students():
 
 def remove_student():
 	students = s.get_students()
-	idx = menu(*[str(student) for student in students], 'Cancel')
+	idx = menu.menu(*[str(student) for student in students], 'Cancel')
 	if idx >= len(students):
 		return
 
@@ -52,6 +53,8 @@ def remove_student():
 	pause()
 
 if __name__ == '__main__':
+	menu.interactive_mode = menu.menu('Non-interactive mode (nubmers for navigation)', 'Interactive mode (arrow keys for navigation)', msg='Choose non-interactive mode if interactive mode does not work for you')
+
 	try:
 		s = Service(int(input('Enter encryption key: ')))
 	except Exception as e:
@@ -60,7 +63,7 @@ if __name__ == '__main__':
 
 	while True:
 		try:
-			match menu('Add student', 'List students', 'Find students', 'Remove student', 'Exit'):
+			match menu.menu('Add student', 'List students', 'Find students', 'Remove student', 'Exit'):
 				case 0:
 					input_student()
 				case 1:
