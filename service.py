@@ -44,8 +44,9 @@ class Service:
 			with open(DB_PATH, 'w') as f:
 				f.write(str(hash(self.key)) + '\n')
 
-	def add_student(self, student):
-		self.init_file()
+	def add_student(self, student: Student):
+		if self.find_students(index = student.index):
+			raise ValueError('Student must have a unique index')
 
 		with open(DB_PATH, 'a') as f:
 			f.write(self.encrypt(f'{student}\n'))
