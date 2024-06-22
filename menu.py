@@ -34,6 +34,10 @@ RESET = '\033[0m'
 CLEAR = '\033[2J'
 CUR0 = '\033[1;1H'
 GREY = '\033[90m'
+ERR = '\033[91m'
+
+def error(msg: str):
+	stdout.write(ERR + msg + RESET + '\n')
 
 def clear():
 	stdout.write(CLEAR + CUR0)
@@ -65,7 +69,7 @@ def menu(*items: list[str], msg: str = None):
 
 			try:
 				selected = int(input('> ')) - 1
-			except:
+			except ValueError as e:
 				stdout.write(CLEAR + CUR0 + 'Must be a number\n')
 				pause()
 				continue
