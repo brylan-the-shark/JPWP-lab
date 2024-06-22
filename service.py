@@ -5,13 +5,13 @@ from hash import hash
 DB_PATH = 'db.txt'
 
 class Service:
-	def __init__(self, encryption_key : int):
+	def __init__(self, encryption_key: int):
 		self.key = encryption_key
 
 		self.init_file()
 
 	@staticmethod
-	def __encrypt(text : str, key : int):
+	def __encrypt(text: str, key: int):
 		new_text = [None] * len(text)
 		for i, c in enumerate(text):
 			if 'A' <= c and c <= 'Z':
@@ -24,10 +24,10 @@ class Service:
 				new_text[i] = c
 		return ''.join(new_text)
 
-	def encrypt(self, text : str):
+	def encrypt(self, text: str):
 		return Service.__encrypt(text, self.key)
 
-	def decrypt(self, text : str):
+	def decrypt(self, text: str):
 		return Service.__encrypt(text, -self.key)
 
 	def init_file(self):
@@ -54,7 +54,7 @@ class Service:
 	def get_students(self) -> list[Student]:
 		self.init_file()
 
-		ret = []
+		students = []
 		with open(DB_PATH, 'r') as f:
 			for line in f.readlines()[1:]:
 				try:
@@ -62,8 +62,8 @@ class Service:
 				except:
 					student = Student.invalid()
 				
-				ret.append(student)
-		return ret
+				students.append(student)
+		return students
 	
 	def remove_student(self, idx):
 		self.init_file()
@@ -76,9 +76,9 @@ class Service:
 				if i != idx + 1:
 					f.write(line)
 
-	def find_students(self, **by):
-		ret = []
+	def find_students(self, **by) -> list[Student]:
+		matching = []
 		for s in self.get_students():
 			if vars(s).items() >= by.items():
-				ret.append(s)
-		return ret
+				matching.append(s)
+		return matching
