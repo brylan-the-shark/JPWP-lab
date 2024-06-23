@@ -4,9 +4,8 @@
 
 ## Instrukcja użytkowania
 1. Uruchomić plik `main.py` za pomocą Python 3.12.4
-1. **KONIECZNE JEST URUCHOMIENIE LOKALNIE**
-	- Program używa funkcji systemu operacyjnego, znaną pod nazwą `getch()`
-	- `getch()` nie jest dostępna w non-interactive mode (online wiersze poleceń/online kompilatory)
+1. Wybrać tryb pracy UI
+	- P.S. Nie miałem czasu na przerobienie całego kodu na użycie biblioteki curses
 1. Wprowadzić klucz do szyfru cezara poraz pierwszy
 	- Jest używany do szyfrowania bazy danych
-1. Posługiwać się strzałkami i `Enter` żeby zaznaczyć w głównym menu
+1. Posługiwać się strzałkami (Interactive mode) lub cyferkami (Non-interactive mode) i `Enter` żeby zaznaczyć opcję w menu
