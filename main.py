@@ -134,7 +134,7 @@ def edit_student():
 
 if __name__ == '__main__':
 	try:
-		menu.interactive_mode = menu.menu('Non-interactive mode (nubmers for navigation)', 'Interactive mode (arrow keys for navigation)', msg='Choose non-interactive mode if interactive mode does not work for you')
+		menu.interactive_mode = menu.menu('Non-interactive mode (Other OSs)', 'Interactive mode (Windows)', msg='Choose non-interactive mode if interactive mode does not work for you')
 		
 		s = Service(int(input('Enter encryption key: ')))
 	except Exception as e:
