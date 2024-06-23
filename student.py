@@ -1,11 +1,11 @@
 import re
 
 class Student:
-	name : str
-	surname : str
-	age : int
-	birthday : str
-	index : str
+	name: str
+	surname: str
+	age: int
+	birthday: str
+	index: str
 
 	def __init__(self, name, surname, age, birthday, index):
 		if not re.fullmatch('[A-Z][a-z]*', name):

@@ -65,7 +65,7 @@ class Service:
 				students.append(student)
 		return students
 	
-	def remove_student(self, idx):
+	def pop_student(self, idx):
 		self.init_file()
 		
 		with open(DB_PATH, 'r') as f:
@@ -75,10 +75,18 @@ class Service:
 			for i, line in enumerate(lines):
 				if i != idx + 1:
 					f.write(line)
+				else:
+					popped = Student.parse(self.decrypt(line.strip()))
+		
+		return popped
 
-	def find_students(self, **by) -> list[Student]:
+	def update_student(self, idx, new_value: Student):
+		self.pop_student(idx)
+		self.add_student(new_value)
+
+	def find_students(self, **by) -> list[tuple[int, Student]]:
 		matching = []
-		for s in self.get_students():
+		for i, s in enumerate(self.get_students()):
 			if vars(s).items() >= by.items():
-				matching.append(s)
+				matching.append((i, s))
 		return matching
